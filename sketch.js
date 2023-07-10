@@ -1,17 +1,23 @@
+const morais = "Morais Jogos";
+
+
 let xBolinha = 300;
 let yBolinha = 200;
-let diametro = 30;
+let diametro = 20;
 let raio = diametro / 2;
 
-let velocidadeXBolinha = 6;
-let velocidadeYBolinha = 6;
-let raqueteComprimento = 15;
+
+let velocidadeXBolinha = 4;
+let velocidadeYBolinha = 4;
+let raqueteComprimento = 10;
 let raqueteAltura = 90;
+
 
 let raqueteComprimentoOp = 10;
 let raqueteAlturaOp = 90;
 let velocidadeYOp;
-//var raquete
+
+
 let xRaquete = 10;
 let yRaquete = 150;
 
@@ -20,11 +26,22 @@ let colidiu = false;
 let meusPonto = 0;
 let pontoOp = 0;
 
+let raquetada;
+let ponto;
+let trilha;
+
 let xRaqueteOp = 575;
 let yRaqueteOp = 150;
 
+function preload() {
+  trilha = loadSound("trilha.mp3");
+  ponto = loadSound("ponto.mp3");
+  raquetada = loadSound("raquetada.mp3");
+}
+
 function setup() {
   createCanvas(600, 400); //tamanho da tela
+  trilha.loop();
 }
 
 function draw() {
@@ -37,10 +54,10 @@ function draw() {
   movimentaMinhaRaquete();
   verificaColisaoRaquete(yRaquete, xRaquete);
   verificaColisaoRaquete(yRaqueteOp, xRaqueteOp);
-  //movimentaRaqueteOp();
+  movimentaRaqueteOp();
   incluiPlacar();
   mancaPonto();
-  
+
 }
 function mostraBolinha() {
   circle(xBolinha, yBolinha, diametro);
@@ -76,6 +93,7 @@ function movimentaMinhaRaquete() {
 function verificaColisaoRaquete() {
   if (xBolinha - raio < xRaquete + raqueteComprimento && yBolinha - raio < yRaquete + raqueteAltura && yBolinha + raio > yRaquete) {
     velocidadeXBolinha *= -1;
+    raquetda.play();
   }
 }
 
@@ -85,6 +103,7 @@ function verificaColisaoRaquete(y, x) {
     collideRectCircle(x, y, raqueteComprimento, raqueteAltura, xBolinha, yBolinha, raio);
   if (colidiu) {
     velocidadeXBolinha *= -1;
+    raquetada.play();
   }
 }
 
@@ -93,16 +112,34 @@ function movimentaRaqueteOp() {
   yRaqueteOp += velocidadeYOp;
 }
 
-function incluiPlacar (){
-  fill(255)
-  text(meusPonto, 278, 26);
-  text(pontoOp, 321, 26);
+function incluiPlacar() {
+  stroke(255);
+  textAlign(CENTER);
+  textSize(16);
+  fill(color(255, 140, 0))
+  rect(150, 10, 40, 20);
+  fill(255);
+  text(meusPonto, 170, 26);
+  fill(color(255, 140, 0))
+  rect(450, 10, 40, 20);
+  fill(255);
+  text(pontoOp, 470, 26);
+  text(morais, 320, 26)
+
 }
-function mancaPonto(){
-  if (xBolinha > 600){
+function mancaPonto() {
+  if (xBolinha > 600) {
     meusPonto += 1;
+    ponto.play();
   }
-  if (xBolinha < 0){
+  if (xBolinha < 0) {
     pontoOp += 1;
+    ponto.play();
+  }
+}
+
+function bolinhaNaoFicaPresa() {
+  if (XBolinha - raio < 0) {
+    XBolinha = 23
   }
 }
