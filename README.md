@@ -1,2 +1,2 @@
 # jogoPong.P5
-comandos seta para cima e para baixo, controla a raquete. 
+comandos mause para baixo e para cima, controla a raquete. 
